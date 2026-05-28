@@ -1,20 +1,55 @@
 package com.anuja.attendance.entity;
 
+import java.time.Instant;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 
 @Entity
+@Table(name = "users")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String name;
+	@Column(name = "first_name", nullable = false, length = 100)
+	private String firstName;
+
+	@Column(name = "last_name", nullable = false, length = 100)
+	private String lastName;
+
+	@Column(nullable = false, unique = true)
+	private String email;
+
+	@Column(nullable = false)
+	private boolean active = true;
+
+	@Column(name = "created_at", nullable = false)
+	private Instant createdAt;
+
+	@Column(name = "updated_at", nullable = false)
+	private Instant updatedAt;
 
 	public User() {
+	}
+
+	@PrePersist
+	void onCreate() {
+		Instant now = Instant.now();
+		createdAt = now;
+		updatedAt = now;
+	}
+
+	@PreUpdate
+	void onUpdate() {
+		updatedAt = Instant.now();
 	}
 
 	public Long getId() {
@@ -25,11 +60,51 @@ public class User {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Instant createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Instant getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Instant updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 }
