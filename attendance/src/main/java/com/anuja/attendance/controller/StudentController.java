@@ -15,7 +15,7 @@ import com.anuja.attendance.service.StudentService;
 
 @RestController
 @RequestMapping("/students")
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin("*")
 public class StudentController {
 
     private final StudentService studentService;

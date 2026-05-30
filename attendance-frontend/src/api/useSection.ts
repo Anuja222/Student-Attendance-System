@@ -1,12 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
   getSections as fetchSections,
-  getSection as fetchSection,
   createSection as createSectionSvc,
-  updateSection as updateSectionSvc,
-  deleteSection as deleteSectionSvc,
 } from './service/sectionService';
-import { Section, CreateSectionPayload, UpdateSectionPayload } from './types/Section';
+import { Section } from './types/Section';
 
 export function useSections() {
   const [data, setData] = useState<Section[] | null>(null);
@@ -34,26 +31,12 @@ export function useSections() {
     load();
   }, [load]);
 
-  const create = useCallback(async (payload: CreateSectionPayload) => {
+  const create = useCallback(async (payload: { name: string }) => {
     const created = await createSectionSvc(payload);
     setData((prev) => (prev ? [created, ...prev] : [created]));
     return created;
   }, []);
 
-  const update = useCallback(async (id: string, payload: UpdateSectionPayload) => {
-    const updated = await updateSectionSvc(id, payload);
-    setData((prev) => (prev ? prev.map((s) => (s.id === id ? updated : s)) : [updated]));
-    return updated;
-  }, []);
-
-  const remove = useCallback(async (id: string) => {
-    await deleteSectionSvc(id);
-    setData((prev) => (prev ? prev.filter((s) => s.id !== id) : null));
-  }, []);
-
-  return { data, isLoading, error, refresh, create, update, remove };
+  return { data, isLoading, error, refresh, create };
 }
 
-export async function fetchSectionById(id: string): Promise<Section> {
-  return fetchSection(id);
-}
