@@ -22,3 +22,12 @@ export const deleteAttendance = async (
 ): Promise<void> => {
   await apiClient.delete(`/attendance/${id}`);
 };
+
+export const getAttendanceByStudent =
+  async (studentNumber: string) => {
+    const response = await apiClient.get(
+      `/attendance/student/${studentNumber}`
+    );
+
+    return response.data;
+  };
