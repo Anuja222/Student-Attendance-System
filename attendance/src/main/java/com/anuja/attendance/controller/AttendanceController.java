@@ -64,4 +64,11 @@ public class AttendanceController {
                 grade,
                 section);
     }
+
+    @GetMapping("/count")
+    public long getAttendanceCount() {
+        return attendanceService
+                .getAllAttendance()
+                .size();
+    }
 }

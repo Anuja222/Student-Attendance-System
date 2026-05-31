@@ -42,4 +42,9 @@ public class TeacherController {
             @PathVariable Long id) {
         teacherService.deleteTeacher(id);
     }
+
+    @GetMapping("/count")
+    public long getTeacherCount() {
+        return teacherService.getAllTeachers().size();
+    }
 }

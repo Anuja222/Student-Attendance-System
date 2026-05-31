@@ -42,4 +42,9 @@ public class SubjectController {
             @PathVariable Long id) {
         subjectService.deleteSubject(id);
     }
+
+    @GetMapping("/count")
+    public long getSubjectCount() {
+        return subjectService.getAllSubjects().size();
+    }
 }

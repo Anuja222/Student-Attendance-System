@@ -39,4 +39,9 @@ public class StudentController {
             @PathVariable String section) {
         return studentService.getStudentsBySection(section);
     }
+
+    @GetMapping("/count")
+    public long getStudentCount() {
+        return studentService.getAllStudents().size();
+    }
 }
