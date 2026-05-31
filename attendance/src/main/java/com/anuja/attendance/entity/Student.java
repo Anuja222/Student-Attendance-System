@@ -16,6 +16,8 @@ public class Student {
 
     private String fullName;
 
+    private String grade;
+
     private String section;
 
     public Student() {
@@ -44,6 +46,14 @@ public class Student {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
+
+    public String getGrade() {
+    return grade;
+}
+
+    public void setGrade(String grade) {
+    this.grade = grade;
+}
 
     public String getSection() {
         return section;

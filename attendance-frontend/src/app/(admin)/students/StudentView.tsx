@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import { Student } from "@/api/types/Student";
 import { Section } from "@/api/types/Section";
 
+import { Grade } from "@/api/types/Grade";
+import { getGrades } from "@/api/service/gradeService";
+
 import {
   getStudents,
   createStudent,
@@ -18,11 +21,18 @@ export default function StudentView() {
 
   const [studentNumber, setStudentNumber] = useState("");
   const [fullName, setFullName] = useState("");
+
+  const [grades, setGrades] = useState<Grade[]>([]);
+  const [grade, setGrade] = useState("");
+
   const [section, setSection] = useState("");
 
   useEffect(() => {
     loadStudents();
     loadSections();
+    loadStudents();
+    loadSections();
+    loadGrades();
   }, []);
 
   const loadStudents = async () => {
@@ -31,6 +41,15 @@ export default function StudentView() {
       setStudents(data);
     } catch (error) {
       console.error("Failed to load students", error);
+    }
+  };
+
+  const loadGrades = async () => {
+    try {
+      const data = await getGrades();
+      setGrades(data);
+    } catch (error) {
+      console.error("Failed to load grades", error);
     }
   };
 
@@ -57,12 +76,14 @@ export default function StudentView() {
       await createStudent({
         studentNumber,
         fullName,
+        grade,
         section,
       });
 
       setStudentNumber("");
       setFullName("");
       setSection("");
+      setGrade("");
 
       await loadStudents();
     } catch (error) {
@@ -101,6 +122,22 @@ export default function StudentView() {
             }
             className="border rounded p-2"
           />
+          <select
+            value={grade}
+            onChange={(e) => setGrade(e.target.value)}
+            className="border rounded p-2"
+          >
+            <option value="">Select Grade</option>
+
+            {grades.map((gradeItem) => (
+              <option
+                key={gradeItem.id}
+                value={gradeItem.name}
+              >
+                {gradeItem.name}
+              </option>
+            ))}
+          </select>
 
           <select
             value={section}
@@ -151,6 +188,10 @@ export default function StudentView() {
                 </div>
 
                 <div>{student.fullName}</div>
+
+                <div>
+                  Grade: {student.grade}
+                </div>
 
                 <div>
                   Section: {student.section}
