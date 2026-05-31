@@ -13,6 +13,10 @@ public interface AttendanceService {
 
     List<Attendance> getAttendanceByStudent(
             String studentNumber);
+    
+    List<Attendance> getAttendanceByClass(
+        String grade,
+        String section);
 
     void deleteAttendance(Long id);
 }

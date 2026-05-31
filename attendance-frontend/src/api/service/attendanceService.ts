@@ -31,3 +31,20 @@ export const getAttendanceByStudent =
 
     return response.data;
   };
+
+export const getAttendanceByClass = async (
+  grade: string,
+  section: string
+) => {
+  const response = await apiClient.get(
+    `/attendance/class`,
+    {
+      params: {
+        grade,
+        section,
+      },
+    }
+  );
+
+  return response.data;
+};

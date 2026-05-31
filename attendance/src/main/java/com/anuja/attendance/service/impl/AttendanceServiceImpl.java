@@ -41,4 +41,14 @@ public class AttendanceServiceImpl
     public void deleteAttendance(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public List<Attendance> getAttendanceByClass(
+            String grade,
+            String section) {
+
+        return repository.findByGradeAndSection(
+                grade,
+                section);
+}
 }

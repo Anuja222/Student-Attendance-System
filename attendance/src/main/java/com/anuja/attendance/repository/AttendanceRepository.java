@@ -11,4 +11,8 @@ public interface AttendanceRepository
 
     List<Attendance> findByStudentNumber(
             String studentNumber);
+
+    List<Attendance> findByGradeAndSection(
+        String grade,
+        String section);
 }
