@@ -1,16 +1,15 @@
 package com.anuja.attendance.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.anuja.attendance.dto.UserRequest;
@@ -30,7 +29,7 @@ class UserServiceImplTest {
 
 	@Test
 	void createUserShouldPersistAndReturnResponse() {
-		UserRequest request = new UserRequest("Anuja", "Sharma", "anuja@example.com", true);
+		UserRequest request = new UserRequest("Anuja", "Sharma", "anuja@example.com", "secret123", "ADMIN", true);
 		User saved = new User();
 		saved.setId(1L);
 		saved.setFirstName("Anuja");
@@ -52,7 +51,7 @@ class UserServiceImplTest {
 	void createUserShouldRejectDuplicateEmail() {
 		when(userRepository.existsByEmail("anuja@example.com")).thenReturn(true);
 
-		assertThatThrownBy(() -> userService.createUser(new UserRequest("Anuja", "Sharma", "anuja@example.com", true)))
+		assertThatThrownBy(() -> userService.createUser(new UserRequest("Anuja", "Sharma", "anuja@example.com", "secret123", "ADMIN", true)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("already exists");
 	}
