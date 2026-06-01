@@ -18,3 +18,15 @@ export const deleteTeacher = async (
 ): Promise<void> => {
   await apiClient.delete(`/teachers/${id}`);
 };
+
+export const getTeacherByEmail = async (
+  email: string
+): Promise<Teacher> => {
+
+  const response =
+    await apiClient.get(
+      `/teachers/email/${email}`
+    );
+
+  return response.data;
+};

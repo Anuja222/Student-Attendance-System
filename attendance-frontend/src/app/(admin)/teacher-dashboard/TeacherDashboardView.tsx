@@ -6,24 +6,34 @@ import { getCurrentUser }
   from "@/utils/auth";
 
 import {
+  getTeacherByEmail
+} from "@/api/service/teacherService";
+
+import {
   getAllocationsByTeacher
 } from "@/api/service/teacherAllocationService";
+
+import { Teacher }
+  from "@/api/types/Teacher";
 
 import { TeacherAllocation }
   from "@/api/types/TeacherAllocation";
 
 export default function TeacherDashboardView() {
 
+  const [teacher,
+    setTeacher] =
+    useState<Teacher | null>(null);
+
   const [allocations,
-    setAllocations] = useState<
-      TeacherAllocation[]
-    >([]);
+    setAllocations] =
+    useState<TeacherAllocation[]>([]);
 
   useEffect(() => {
-    loadAllocations();
+    loadData();
   }, []);
 
-  const loadAllocations = async () => {
+  const loadData = async () => {
 
     const user =
       getCurrentUser();
@@ -32,20 +42,35 @@ export default function TeacherDashboardView() {
       return;
     }
 
-    const data =
-      await getAllocationsByTeacher(
-        `${user.firstName} ${user.lastName}`
+    const teacherData =
+      await getTeacherByEmail(
+        user.email
       );
 
-    setAllocations(data);
+    setTeacher(teacherData);
+
+    const allocationData =
+      await getAllocationsByTeacher(
+        teacherData.fullName
+      );
+
+    setAllocations(
+      allocationData
+    );
   };
 
   return (
     <div className="p-6">
 
-      <h1 className="text-3xl font-bold mb-6">
+      <h1 className="text-3xl font-bold mb-2">
         Teacher Dashboard
       </h1>
+
+      <p className="mb-6">
+        Welcome,
+        {" "}
+        {teacher?.fullName}
+      </p>
 
       <h2 className="text-xl font-semibold mb-4">
         My Allocations
@@ -78,6 +103,7 @@ export default function TeacherDashboardView() {
               {allocation.subject}
             </div>
           </div>
+
         ))}
 
       </div>
