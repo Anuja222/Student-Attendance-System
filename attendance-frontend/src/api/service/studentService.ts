@@ -21,3 +21,17 @@ export const getStudentsBySection = async (
   );
   return response.data;
 };
+
+export const getStudentsByClass = async (
+  grade: string,
+  section: string
+) => {
+  const response = await apiClient.get("/students/class", {
+    params: {
+      grade,
+      section,
+    },
+  });
+
+  return response.data;
+};
