@@ -34,4 +34,12 @@ public class TeacherAllocationServiceImpl
     public void deleteAllocation(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public List<TeacherAllocation> getAllocationsByTeacher(
+            String teacher) {
+
+        return repository.findByTeacher(
+                teacher);
+    }
 }

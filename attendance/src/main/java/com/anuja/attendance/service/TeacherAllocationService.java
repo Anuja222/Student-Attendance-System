@@ -10,6 +10,7 @@ public interface TeacherAllocationService {
             TeacherAllocation allocation);
 
     List<TeacherAllocation> getAllAllocations();
+    List<TeacherAllocation> getAllocationsByTeacher(String teacher);
 
     void deleteAllocation(Long id);
 }

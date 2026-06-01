@@ -42,4 +42,13 @@ public class TeacherAllocationController {
             @PathVariable Long id) {
         allocationService.deleteAllocation(id);
     }
+
+    @GetMapping("/teacher/{teacher}")
+    public List<TeacherAllocation> getByTeacher(
+            @PathVariable String teacher) {
+
+        return allocationService
+                .getAllocationsByTeacher(
+                        teacher);
+    }
 }
