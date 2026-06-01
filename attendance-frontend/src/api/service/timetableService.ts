@@ -22,3 +22,8 @@ export const deleteTimetable = async (
 ): Promise<void> => {
   await apiClient.delete(`/timetables/${id}`);
 };
+
+export const getTimetablesByTeacher = async (teacher: string) => {
+  const response = await apiClient.get(`/timetables/teacher/${teacher}`);
+  return response.data;
+};

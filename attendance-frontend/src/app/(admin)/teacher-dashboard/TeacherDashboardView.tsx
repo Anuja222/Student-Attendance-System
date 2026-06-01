@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Timetable } from "@/api/types/Timetable";
+import { getTimetablesByTeacher } from "@/api/service/timetableService";
 
 import { getCurrentUser }
   from "@/utils/auth";
@@ -21,13 +23,16 @@ import { TeacherAllocation }
 
 export default function TeacherDashboardView() {
 
-  const [teacher,
+const [teacher,
     setTeacher] =
     useState<Teacher | null>(null);
 
-  const [allocations,
+const [allocations,
     setAllocations] =
     useState<TeacherAllocation[]>([]);
+
+const [timetables,
+    setTimetables] = useState<Timetable[]>([]);
 
   useEffect(() => {
     loadData();
@@ -57,7 +62,19 @@ export default function TeacherDashboardView() {
     setAllocations(
       allocationData
     );
-  };
+
+    const timetableData = await getTimetablesByTeacher(teacherData.fullName);
+
+    const sortedTimetables = [...timetableData].sort((a, b) => {
+    if (a.day !== b.day) {
+        return a.day.localeCompare(b.day);
+    }
+
+    return a.period - b.period;
+    });
+
+    setTimetables(sortedTimetables);
+    };
 
   return (
     <div className="p-6">
@@ -75,8 +92,7 @@ export default function TeacherDashboardView() {
       <h2 className="text-xl font-semibold mb-4">
         My Allocations
       </h2>
-
-      <div className="space-y-3">
+            <div className="space-y-3">
 
         {allocations.map(
           (allocation) => (
@@ -108,6 +124,28 @@ export default function TeacherDashboardView() {
 
       </div>
 
+      <h2 className="text-xl font-semibold mt-8 mb-4">
+        My Timetable
+      </h2>
+
+        <div className="space-y-3">
+        {timetables.length === 0 ? (
+            <p>No timetable entries found.</p>
+        ) : (
+            timetables.map((entry) => (
+            <div
+                key={entry.id}
+                className="border rounded p-3"
+            >
+                <div>{entry.day}</div>
+                <div>
+                P{entry.period} | {entry.grade} - {entry.section}
+                </div>
+                <div>Subject: {entry.subject}</div>
+            </div>
+            ))
+        )}
+        </div>
     </div>
   );
 }
