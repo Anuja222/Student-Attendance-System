@@ -11,4 +11,6 @@ public interface StudentService {
     List<Student> getAllStudents();
 
     List<Student> getStudentsBySection(String section);
+
+    List<Student> getStudentsByGradeAndSection(String grade, String section);
 }

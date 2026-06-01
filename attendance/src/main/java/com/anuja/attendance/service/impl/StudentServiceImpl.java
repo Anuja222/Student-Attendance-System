@@ -31,4 +31,9 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getStudentsBySection(String section) {
         return studentRepository.findBySection(section);
     }
+
+    @Override
+    public List<Student> getStudentsByGradeAndSection(String grade, String section) {
+        return studentRepository.findByGradeAndSection(grade, section);
+    }
 }
