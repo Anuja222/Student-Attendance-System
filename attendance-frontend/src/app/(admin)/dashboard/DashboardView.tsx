@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { getCurrentUser } from "@/utils/auth";
 
 import {
   getStudentCount,
@@ -10,6 +12,9 @@ import {
 } from "@/api/service/dashboardService";
 
 export default function DashboardView() {
+
+  const router = useRouter();
+
   const [studentCount, setStudentCount] =
     useState(0);
 
@@ -23,6 +28,13 @@ export default function DashboardView() {
     useState(0);
 
   useEffect(() => {
+    const user = getCurrentUser();
+
+    if (!user) {
+      router.push("/signin");
+      return;
+    }
+
     loadDashboard();
   }, []);
 
