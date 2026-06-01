@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.anuja.attendance.dto.LoginRequest;
+import com.anuja.attendance.dto.LoginResponse;
 import com.anuja.attendance.dto.UserRequest;
 import com.anuja.attendance.dto.UserResponse;
 import com.anuja.attendance.entity.User;
@@ -45,5 +47,31 @@ public class UserServiceImpl implements UserService {
 	@Transactional(readOnly = true)
 	public List<UserResponse> getAllUsers() {
 		return userRepository.findAll().stream().map(UserMapper::toResponse).toList();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public LoginResponse login(
+			LoginRequest request) {
+
+		User user = userRepository
+				.findByEmail(request.email())
+				.orElseThrow(() ->
+						new IllegalArgumentException(
+								"Invalid email or password"));
+
+		if (!user.getPassword()
+				.equals(request.password())) {
+
+			throw new IllegalArgumentException(
+					"Invalid email or password");
+		}
+
+		return new LoginResponse(
+				user.getId(),
+				user.getFirstName(),
+				user.getLastName(),
+				user.getEmail(),
+				user.getRole());
 	}
 }
