@@ -47,4 +47,12 @@ public class TeacherController {
     public long getTeacherCount() {
         return teacherService.getAllTeachers().size();
     }
+
+    @GetMapping("/email/{email}")
+    public Teacher getTeacherByEmail(
+            @PathVariable String email) {
+
+        return teacherService
+                .getTeacherByEmail(email);
+    }
 }

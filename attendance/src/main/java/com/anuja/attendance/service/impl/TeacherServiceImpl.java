@@ -32,4 +32,14 @@ public class TeacherServiceImpl implements TeacherService {
     public void deleteTeacher(Long id) {
         teacherRepository.deleteById(id);
     }
+
+    @Override
+    public Teacher getTeacherByEmail(String email) {
+
+        return teacherRepository
+                .findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Teacher not found"));
+    }
 }

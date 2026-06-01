@@ -22,3 +22,14 @@ export const deleteTeacherAllocation = async (
 ): Promise<void> => {
   await apiClient.delete(`/teacher-allocations/${id}`);
 };
+
+export const getAllocationsByTeacher =
+  async (teacher: string) => {
+
+    const response =
+      await apiClient.get(
+        `/teacher-allocations/teacher/${teacher}`
+      );
+
+    return response.data;
+};

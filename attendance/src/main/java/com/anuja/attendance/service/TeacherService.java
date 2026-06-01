@@ -9,6 +9,7 @@ public interface TeacherService {
     Teacher createTeacher(Teacher teacher);
 
     List<Teacher> getAllTeachers();
+    Teacher getTeacherByEmail(String email);
 
     void deleteTeacher(Long id);
 }
