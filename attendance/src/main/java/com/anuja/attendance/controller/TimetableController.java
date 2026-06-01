@@ -42,4 +42,10 @@ public class TimetableController {
             @PathVariable Long id) {
         timetableService.deleteTimetable(id);
     }
+
+    @GetMapping("/teacher/{teacher}")
+    public List<Timetable> getTimetablesByTeacher(
+            @PathVariable String teacher) {
+        return timetableService.getTimetablesByTeacher(teacher);
+    }
 }

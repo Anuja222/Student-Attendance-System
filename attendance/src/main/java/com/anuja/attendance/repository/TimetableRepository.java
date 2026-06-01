@@ -9,8 +9,10 @@ import com.anuja.attendance.entity.Timetable;
 public interface TimetableRepository
         extends JpaRepository<Timetable, Long> {
 
-    List<Timetable> findByGradeAndSection(
+        List<Timetable> findByGradeAndSection(
             String grade,
             String section);
+
+        List<Timetable> findByTeacher(String teacher);
 }
 

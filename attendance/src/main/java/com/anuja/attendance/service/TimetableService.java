@@ -10,6 +10,7 @@ public interface TimetableService {
             Timetable timetable);
 
     List<Timetable> getAllTimetables();
+    List<Timetable> getTimetablesByTeacher(String teacher);
 
     void deleteTimetable(Long id);
 }

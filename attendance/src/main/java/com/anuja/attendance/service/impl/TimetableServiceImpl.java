@@ -34,4 +34,9 @@ public class TimetableServiceImpl
     public void deleteTimetable(Long id) {
         timetableRepository.deleteById(id);
     }
+
+    @Override
+    public List<Timetable> getTimetablesByTeacher(String teacher) {
+        return timetableRepository.findByTeacher(teacher);
+    }
 }
