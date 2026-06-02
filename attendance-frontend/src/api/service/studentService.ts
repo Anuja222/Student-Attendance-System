@@ -35,3 +35,13 @@ export const getStudentsByClass = async (
 
   return response.data;
 };
+
+export const getStudentByEmail = async (email: string) => {
+  const response = await apiClient.get("/students/by-email", {
+    params: {
+      email,
+    },
+  });
+
+  return response.data;
+};

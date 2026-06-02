@@ -61,4 +61,11 @@ public class StudentController {
         return studentService
                 .getStudentByEmail(email);
     }
+
+    @GetMapping("/by-email")
+    public Student getStudentByEmailParam(
+            @RequestParam String email) {
+
+        return studentService.getStudentByEmail(email);
+    }
 }
