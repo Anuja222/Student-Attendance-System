@@ -53,4 +53,12 @@ public class StudentController {
 
         return studentService.getStudentsByGradeAndSection(grade, section);
     }
+
+    @GetMapping("/email/{email}")
+    public Student getStudentByEmail(
+            @PathVariable String email) {
+
+        return studentService
+                .getStudentByEmail(email);
+    }
 }

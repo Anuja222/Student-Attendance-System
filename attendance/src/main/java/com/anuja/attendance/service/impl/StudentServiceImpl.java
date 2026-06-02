@@ -36,4 +36,14 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getStudentsByGradeAndSection(String grade, String section) {
         return studentRepository.findByGradeAndSection(grade, section);
     }
+
+    @Override
+    public Student getStudentByEmail(String email) {
+
+        return studentRepository
+                .findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Student not found"));
+    }
 }

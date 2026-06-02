@@ -20,6 +20,8 @@ public class Student {
 
     private String section;
 
+    private String email;
+
     public Student() {
     }
 
@@ -48,12 +50,12 @@ public class Student {
     }
 
     public String getGrade() {
-    return grade;
-}
+        return grade;
+    }
 
     public void setGrade(String grade) {
-    this.grade = grade;
-}
+        this.grade = grade;
+    }
 
     public String getSection() {
         return section;
@@ -62,4 +64,13 @@ public class Student {
     public void setSection(String section) {
         this.section = section;
     }
+
+    public String getEmail() {
+    return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
+
