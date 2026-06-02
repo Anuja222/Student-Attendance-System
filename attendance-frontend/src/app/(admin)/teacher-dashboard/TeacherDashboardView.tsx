@@ -13,6 +13,8 @@ import {getTeacherByEmail} from "@/api/service/teacherService";
 import {getAllocationsByTeacher} from "@/api/service/teacherAllocationService";
 import { Teacher }from "@/api/types/Teacher";
 import { TeacherAllocation }from "@/api/types/TeacherAllocation";
+import { logout } from "@/utils/auth";
+
 
 export default function TeacherDashboardView() {
 
@@ -117,12 +119,26 @@ const saveAttendance = async () => {
   }
 };
 
+const handleLogout = () => {
+  logout();
+  router.push("/signin");
+};
+
   return (
     <div className="p-6">
 
-      <h1 className="text-3xl font-bold mb-2">
-        Teacher Dashboard
-      </h1>
+        <div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl font-bold">
+            Teacher Dashboard
+        </h1>
+
+        <button
+            onClick={handleLogout}
+            className="border rounded px-4 py-2"
+        >
+            Logout
+        </button>
+        </div>
 
       <p className="mb-6">
         Welcome,

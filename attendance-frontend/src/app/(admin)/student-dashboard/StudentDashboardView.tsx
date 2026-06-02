@@ -8,6 +8,7 @@ import { getStudentByEmail } from "@/api/service/studentService";
 import { getAttendanceByStudent } from "@/api/service/attendanceService";
 import { useRouter } from "next/navigation";
 import { hasRole } from "@/utils/routeGuard";
+import { logout } from "@/utils/auth";
 
 export default function StudentDashboardView() {
   const [student, setStudent] = useState<Student | null>(null);
@@ -25,7 +26,7 @@ export default function StudentDashboardView() {
 
 }, []);
 
-  const loadData = async () => {
+const loadData = async () => {
     const user = getCurrentUser();
 
     if (!user) {
@@ -40,26 +41,40 @@ export default function StudentDashboardView() {
     );
 
     setRecords(attendanceData);
-  };
+};
 
-  const total = records.length;
+const total = records.length;
 
-  const present = records.filter(
+const present = records.filter(
     (record) => record.status === "PRESENT"
-  ).length;
+).length;
 
-  const absent = records.filter(
+const absent = records.filter(
     (record) => record.status === "ABSENT"
-  ).length;
+).length;
 
-  const percentage =
+const handleLogout = () => {
+    logout();
+    router.push("/signin");
+};
+
+const percentage =
     total === 0 ? 0 : ((present / total) * 100).toFixed(2);
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold mb-2">
-        Student Dashboard
-      </h1>
+        <div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl font-bold">
+            Student Dashboard
+        </h1>
+
+        <button
+            onClick={handleLogout}
+            className="border rounded px-4 py-2"
+        >
+            Logout
+        </button>
+        </div>
 
       <p className="mb-6">
         Welcome, {student?.fullName}
