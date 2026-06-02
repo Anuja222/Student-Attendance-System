@@ -8,7 +8,6 @@ import { getStudentByEmail } from "@/api/service/studentService";
 import { getAttendanceByStudent } from "@/api/service/attendanceService";
 import { useRouter } from "next/navigation";
 import { hasRole } from "@/utils/routeGuard";
-import { logout } from "@/utils/auth";
 import Navbar from "@/components/Navbar";
 
 export default function StudentDashboardView() {
@@ -54,11 +53,6 @@ const absent = records.filter(
     (record) => record.status === "ABSENT"
 ).length;
 
-const handleLogout = () => {
-    logout();
-    router.push("/signin");
-};
-
 const percentage =
     total === 0 ? 0 : ((present / total) * 100).toFixed(2);
 
@@ -72,13 +66,6 @@ const percentage =
         <h1 className="text-3xl font-bold">
             Student Dashboard
         </h1>
-
-        <button
-            onClick={handleLogout}
-            className="border rounded px-4 py-2"
-        >
-            Logout
-        </button>
         </div>
 
       <p className="mb-6">

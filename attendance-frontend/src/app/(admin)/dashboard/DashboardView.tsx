@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { hasRole } from "@/utils/routeGuard";
-import { logout } from "@/utils/auth";
 import Navbar from "@/components/Navbar";
 
 import {
@@ -58,11 +57,6 @@ useEffect(() => {
     );
   };
 
-  const handleLogout = () => {
-    logout();
-    router.push("/signin");
-  };
-
   return (
   <div>
     <Navbar />  
@@ -71,13 +65,6 @@ useEffect(() => {
         <h1 className="text-3xl font-bold">
           Dashboard
         </h1>
-
-        <button
-          onClick={handleLogout}
-          className="border rounded px-4 py-2"
-        >
-          Logout
-        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
