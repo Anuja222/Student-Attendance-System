@@ -6,39 +6,34 @@ import { getTimetablesByTeacher } from "@/api/service/timetableService";
 import { Student } from "@/api/types/Student";
 import { getStudentsByClass } from "@/api/service/studentService";
 import { createAttendance } from "@/api/service/attendanceService";
-
-import { getCurrentUser }
-  from "@/utils/auth";
-
-import {
-  getTeacherByEmail
-} from "@/api/service/teacherService";
-
-import {
-  getAllocationsByTeacher
-} from "@/api/service/teacherAllocationService";
-
-import { Teacher }
-  from "@/api/types/Teacher";
-
-import { TeacherAllocation }
-  from "@/api/types/TeacherAllocation";
+import { useRouter } from "next/navigation";
+import { hasRole } from "@/utils/routeGuard";
+import { getCurrentUser }from "@/utils/auth";
+import {getTeacherByEmail} from "@/api/service/teacherService";
+import {getAllocationsByTeacher} from "@/api/service/teacherAllocationService";
+import { Teacher }from "@/api/types/Teacher";
+import { TeacherAllocation }from "@/api/types/TeacherAllocation";
 
 export default function TeacherDashboardView() {
 
 const [teacher,setTeacher] = useState<Teacher | null>(null);
-
 const [allocations,setAllocations] = useState<TeacherAllocation[]>([]);
-
 const [timetables,setTimetables] = useState<Timetable[]>([]);
-
 const [selectedEntry, setSelectedEntry] = useState<Timetable | null>(null);
 const [students, setStudents] = useState<Student[]>([]);
 const [attendanceStatus, setAttendanceStatus] = useState<Record<number, string>>({});
+const router = useRouter();
 
-  useEffect(() => {
-    loadData();
-  }, []);
+useEffect(() => {
+
+  if (!hasRole("TEACHER")) {
+    router.push("/signin");
+    return;
+  }
+
+  loadData();
+
+}, []);
 
 const loadData = async () => {
   const user = getCurrentUser();

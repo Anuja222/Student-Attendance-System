@@ -6,14 +6,24 @@ import { Student } from "@/api/types/Student";
 import { Attendance } from "@/api/types/Attendance";
 import { getStudentByEmail } from "@/api/service/studentService";
 import { getAttendanceByStudent } from "@/api/service/attendanceService";
+import { useRouter } from "next/navigation";
+import { hasRole } from "@/utils/routeGuard";
 
 export default function StudentDashboardView() {
   const [student, setStudent] = useState<Student | null>(null);
   const [records, setRecords] = useState<Attendance[]>([]);
+  const router = useRouter();
 
-  useEffect(() => {
-    loadData();
-  }, []);
+ useEffect(() => {
+
+  if (!hasRole("STUDENT")) {
+    router.push("/signin");
+    return;
+  }
+
+  loadData();
+
+}, []);
 
   const loadData = async () => {
     const user = getCurrentUser();

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getCurrentUser } from "@/utils/auth";
+import { hasRole } from "@/utils/routeGuard";
 
 import {
   getStudentCount,
@@ -27,16 +27,16 @@ export default function DashboardView() {
   const [attendanceCount, setAttendanceCount] =
     useState(0);
 
-  useEffect(() => {
-    const user = getCurrentUser();
+useEffect(() => {
 
-    if (!user) {
-      router.push("/signin");
-      return;
-    }
+  if (!hasRole("ADMIN")) {
+    router.push("/signin");
+    return;
+  }
 
-    loadDashboard();
-  }, []);
+  loadDashboard();
+
+}, []);
 
   const loadDashboard = async () => {
     setStudentCount(
