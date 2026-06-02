@@ -96,26 +96,30 @@ const saveAttendance = async () => {
 
   const today = new Date().toISOString().split("T")[0];
 
-  for (const student of students) {
-    await createAttendance({
-      studentNumber: student.studentNumber,
-      studentName: student.fullName,
-      grade: student.grade,
-      section: student.section,
-      subject: selectedEntry.subject,
-      teacher: selectedEntry.teacher,
-      day: selectedEntry.day,
-      period: selectedEntry.period,
-      date: today,
-      status: attendanceStatus[student.id],
-    });
+  try {
+    for (const student of students) {
+      await createAttendance({
+        studentNumber: student.studentNumber,
+        studentName: student.fullName,
+        grade: student.grade,
+        section: student.section,
+        subject: selectedEntry.subject,
+        teacher: selectedEntry.teacher,
+        day: selectedEntry.day,
+        period: selectedEntry.period,
+        date: today,
+        status: attendanceStatus[student.id],
+      });
+    }
+
+    alert("Attendance saved");
+
+    setSelectedEntry(null);
+    setStudents([]);
+    setAttendanceStatus({});
+  } catch (error: unknown) {
+    alert("Attendance has already been recorded for this class/period.");
   }
-
-  alert("Attendance saved");
-
-  setSelectedEntry(null);
-  setStudents([]);
-  setAttendanceStatus({});
 };
 
   return (

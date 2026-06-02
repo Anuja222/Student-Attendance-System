@@ -128,7 +128,7 @@ export default function AttendanceView() {
             className="border rounded p-3 flex justify-between items-center"
           >
             <div>
-              <div>
+              <div className="font-semibold">
                 {record.studentName}
               </div>
 
@@ -137,11 +137,23 @@ export default function AttendanceView() {
               </div>
 
               <div>
-                {record.date}
+                Subject: {record.subject}
               </div>
 
               <div>
-                {record.status}
+                Teacher: {record.teacher}
+              </div>
+
+              <div>
+                {record.day} | P{record.period}
+              </div>
+
+              <div>
+                Date: {record.date}
+              </div>
+
+              <div>
+                Status: {record.status}
               </div>
             </div>
 

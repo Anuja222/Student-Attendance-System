@@ -20,8 +20,22 @@ public class AttendanceServiceImpl
     }
 
     @Override
-    public Attendance markAttendance(
-            Attendance attendance) {
+    public Attendance markAttendance(Attendance attendance) {
+
+        boolean alreadyExists =
+                repository.existsByStudentNumberAndDateAndPeriodAndSubject(
+                        attendance.getStudentNumber(),
+                        attendance.getDate(),
+                        attendance.getPeriod(),
+                        attendance.getSubject()
+                );
+
+        if (alreadyExists) {
+            throw new IllegalArgumentException(
+                    "Attendance already recorded for this student, subject, period, and date"
+            );
+        }
+
         return repository.save(attendance);
     }
 
