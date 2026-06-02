@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { hasRole } from "@/utils/routeGuard";
 import { logout } from "@/utils/auth";
+import Navbar from "@/components/Navbar";
 
 import {
   getStudentCount,
@@ -63,6 +64,8 @@ useEffect(() => {
   };
 
   return (
+  <div>
+    <Navbar />  
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">
@@ -121,5 +124,6 @@ useEffect(() => {
 
       </div>
     </div>
+  </div>
   );
 }

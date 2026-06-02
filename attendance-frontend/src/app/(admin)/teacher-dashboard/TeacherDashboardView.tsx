@@ -14,6 +14,7 @@ import {getAllocationsByTeacher} from "@/api/service/teacherAllocationService";
 import { Teacher }from "@/api/types/Teacher";
 import { TeacherAllocation }from "@/api/types/TeacherAllocation";
 import { logout } from "@/utils/auth";
+import Navbar from "@/components/Navbar";
 
 
 export default function TeacherDashboardView() {
@@ -125,149 +126,118 @@ const handleLogout = () => {
 };
 
   return (
-    <div className="p-6">
+    <div>
+      <Navbar />
 
+      <div className="p-6">
         <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold">
-            Teacher Dashboard
-        </h1>
+          <h1 className="text-3xl font-bold">Teacher Dashboard</h1>
 
-        <button
+          <button
             onClick={handleLogout}
             className="border rounded px-4 py-2"
-        >
+          >
             Logout
-        </button>
+          </button>
         </div>
 
-      <p className="mb-6">
-        Welcome,
-        {" "}
-        {teacher?.fullName}
-      </p>
+        <p className="mb-6">
+          Welcome, {" "}
+          {teacher?.fullName}
+        </p>
 
-      <h2 className="text-xl font-semibold mb-4">
-        My Allocations
-      </h2>
-            <div className="space-y-3">
-
-        {allocations.map(
-          (allocation) => (
-
-          <div
-            key={allocation.id}
-            className="border rounded p-3"
-          >
-            <div>
-              Grade:
-              {" "}
-              {allocation.grade}
+        <h2 className="text-xl font-semibold mb-4">My Allocations</h2>
+        <div className="space-y-3">
+          {allocations.map((allocation) => (
+            <div key={allocation.id} className="border rounded p-3">
+              <div>
+                Grade: {" "}
+                {allocation.grade}
+              </div>
+              <div>
+                Section: {" "}
+                {allocation.section}
+              </div>
+              <div>
+                Subject: {" "}
+                {allocation.subject}
+              </div>
             </div>
+          ))}
+        </div>
 
-            <div>
-              Section:
-              {" "}
-              {allocation.section}
-            </div>
-
-            <div>
-              Subject:
-              {" "}
-              {allocation.subject}
-            </div>
-          </div>
-
-        ))}
-
-      </div>
-
-      <h2 className="text-xl font-semibold mt-8 mb-4">
-        My Timetable
-      </h2>
+        <h2 className="text-xl font-semibold mt-8 mb-4">My Timetable</h2>
 
         <div className="space-y-3">
-        {timetables.length === 0 ? (
+          {timetables.length === 0 ? (
             <p>No timetable entries found.</p>
-        ) : (
+          ) : (
             timetables.map((entry) => (
-            <div
-                key={entry.id}
-                className="border rounded p-3"
-            >
+              <div key={entry.id} className="border rounded p-3">
                 <div>{entry.day}</div>
-
                 <div>
-                P{entry.period} | {entry.grade} - {entry.section}
+                  P{entry.period} | {entry.grade} - {entry.section}
                 </div>
-
                 <div>Subject: {entry.subject}</div>
 
                 <button
-                onClick={() => openAttendance(entry)}
-                className="border rounded px-3 py-1 mt-2"
+                  onClick={() => openAttendance(entry)}
+                  className="border rounded px-3 py-1 mt-2"
                 >
-                Mark Attendance
+                  Mark Attendance
                 </button>
-
-            </div>
+              </div>
             ))
-        )}
+          )}
         </div>
 
-        
         {selectedEntry && (
-            <div className="border rounded p-4 mt-8">
-            <h2 className="text-xl font-semibold mb-4">
-                Mark Attendance
-            </h2>
+          <div className="border rounded p-4 mt-8">
+            <h2 className="text-xl font-semibold mb-4">Mark Attendance</h2>
 
             <p className="mb-4">
-                {selectedEntry.day} | P{selectedEntry.period} |{" "}
-                {selectedEntry.grade} - {selectedEntry.section} |{" "}
-                {selectedEntry.subject}
+              {selectedEntry.day} | P{selectedEntry.period} |{" "}
+              {selectedEntry.grade} - {selectedEntry.section} |{" "}
+              {selectedEntry.subject}
             </p>
 
             <div className="space-y-2">
-                {students.map((student) => (
+              {students.map((student) => (
                 <div
-                    key={student.id}
-                    className="border rounded p-3 flex justify-between items-center"
+                  key={student.id}
+                  className="border rounded p-3 flex justify-between items-center"
                 >
-                    <div>
+                  <div>
                     <div>{student.fullName}</div>
                     <div>{student.studentNumber}</div>
-                    </div>
+                  </div>
 
-                    <select
+                  <select
                     value={attendanceStatus[student.id]}
                     onChange={(e) =>
-                        setAttendanceStatus({
+                      setAttendanceStatus({
                         ...attendanceStatus,
                         [student.id]: e.target.value,
-                        })
+                      })
                     }
                     className="border rounded p-2"
-                    >
-                    <option value="PRESENT">
-                        Present
-                    </option>
-
-                    <option value="ABSENT">
-                        Absent
-                    </option>
-                    </select>
+                  >
+                    <option value="PRESENT">Present</option>
+                    <option value="ABSENT">Absent</option>
+                  </select>
                 </div>
-                ))}
+              ))}
             </div>
 
             <button
-                onClick={saveAttendance}
-                className="border rounded px-4 py-2 mt-4"
+              onClick={saveAttendance}
+              className="border rounded px-4 py-2 mt-4"
             >
-                Save Attendance
+              Save Attendance
             </button>
-            </div>
+          </div>
         )}
+      </div>
     </div>
   );
 }

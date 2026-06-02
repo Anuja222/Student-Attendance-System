@@ -9,6 +9,7 @@ import { getAttendanceByStudent } from "@/api/service/attendanceService";
 import { useRouter } from "next/navigation";
 import { hasRole } from "@/utils/routeGuard";
 import { logout } from "@/utils/auth";
+import Navbar from "@/components/Navbar";
 
 export default function StudentDashboardView() {
   const [student, setStudent] = useState<Student | null>(null);
@@ -62,6 +63,10 @@ const percentage =
     total === 0 ? 0 : ((present / total) * 100).toFixed(2);
 
   return (
+  <div>
+    <Navbar />  
+ 
+    
     <div className="p-6">
         <div className="flex justify-between items-center mb-4">
         <h1 className="text-3xl font-bold">
@@ -125,5 +130,6 @@ const percentage =
         ))}
       </div>
     </div>
+  </div>
   );
 }
