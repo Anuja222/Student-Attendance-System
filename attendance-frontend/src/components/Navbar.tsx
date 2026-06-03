@@ -1,12 +1,17 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getCurrentUser, logout } from "@/utils/auth";
 
 export default function Navbar() {
   const router = useRouter();
-  const user = getCurrentUser();
+  const [user, setUser] = useState<ReturnType<typeof getCurrentUser>>(null);
+
+  useEffect(() => {
+    setUser(getCurrentUser());
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -29,6 +34,8 @@ export default function Navbar() {
             <Link href="/grades">Grades</Link>
             <Link href="/sections">Sections</Link>
             <Link href="/timetables">Timetable</Link>
+            <Link href="/attendance-reports">Report</Link>
+
           </>
         )}
 
