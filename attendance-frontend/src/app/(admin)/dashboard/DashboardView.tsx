@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { hasRole } from "@/utils/routeGuard";
 import Navbar from "@/components/Navbar";
+import Link from "next/link";
 
 import {
   getStudentCount,

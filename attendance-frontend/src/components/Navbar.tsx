@@ -26,9 +26,9 @@ export default function Navbar() {
             <Link href="/students">Students</Link>
             <Link href="/teachers">Teachers</Link>
             <Link href="/subjects">Subjects</Link>
+            <Link href="/grades">Grades</Link>
+            <Link href="/sections">Sections</Link>
             <Link href="/timetables">Timetable</Link>
-            <Link href="/attendance">Attendance</Link>
-            <Link href="/attendance-reports">Reports</Link>
           </>
         )}
 
