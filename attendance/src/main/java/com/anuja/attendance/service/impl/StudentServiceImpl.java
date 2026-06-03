@@ -77,4 +77,9 @@ public class StudentServiceImpl implements StudentService {
                         new RuntimeException(
                                 "Student not found"));
     }
+
+    @Override
+    public void deleteStudent(Long id) {
+        studentRepository.deleteById(id);
+    }
 }

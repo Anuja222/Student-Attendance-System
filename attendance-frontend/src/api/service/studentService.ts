@@ -45,3 +45,9 @@ export const getStudentByEmail = async (email: string) => {
 
   return response.data;
 };
+
+export const deleteStudent = async (
+  id: number
+) => {
+  await apiClient.delete(`/students/${id}`);
+};

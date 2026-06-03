@@ -57,3 +57,20 @@ body {
   background: #030712;
   color: white;
 }
+
+input,
+textarea,
+button {
+  background: #111827;
+  color: white;
+}
+
+select {
+  background: #111827;
+  color: white;
+}
+
+option {
+  background: white;
+  color: black;
+}
