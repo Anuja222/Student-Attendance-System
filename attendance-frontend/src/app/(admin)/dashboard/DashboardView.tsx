@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getCurrentUser } from "@/utils/auth";
+import { hasRole } from "@/utils/routeGuard";
+import Navbar from "@/components/Navbar";
+import Link from "next/link";
 
 import {
   getStudentCount,
@@ -27,16 +29,16 @@ export default function DashboardView() {
   const [attendanceCount, setAttendanceCount] =
     useState(0);
 
-  useEffect(() => {
-    const user = getCurrentUser();
+useEffect(() => {
 
-    if (!user) {
-      router.push("/signin");
-      return;
-    }
+  if (!hasRole("ADMIN")) {
+    router.push("/signin");
+    return;
+  }
 
-    loadDashboard();
-  }, []);
+  loadDashboard();
+
+}, []);
 
   const loadDashboard = async () => {
     setStudentCount(
@@ -57,10 +59,14 @@ export default function DashboardView() {
   };
 
   return (
+  <div>
+    <Navbar />  
     <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">
-        Dashboard
-      </h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">
+          Dashboard
+        </h1>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
@@ -106,5 +112,6 @@ export default function DashboardView() {
 
       </div>
     </div>
+  </div>
   );
 }

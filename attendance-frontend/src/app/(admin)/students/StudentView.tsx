@@ -21,6 +21,7 @@ export default function StudentView() {
 
   const [studentNumber, setStudentNumber] = useState("");
   const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
 
   const [grades, setGrades] = useState<Grade[]>([]);
   const [grade, setGrade] = useState("");
@@ -66,6 +67,7 @@ export default function StudentView() {
     if (
       !studentNumber.trim() ||
       !fullName.trim() ||
+      !email.trim() ||
       !section.trim()
     ) {
       alert("Please fill all fields");
@@ -76,12 +78,14 @@ export default function StudentView() {
       await createStudent({
         studentNumber,
         fullName,
+        email,
         grade,
         section,
       });
 
       setStudentNumber("");
       setFullName("");
+      setEmail("");
       setSection("");
       setGrade("");
 
@@ -120,6 +124,13 @@ export default function StudentView() {
             onChange={(e) =>
               setFullName(e.target.value)
             }
+            className="border rounded p-2"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="border rounded p-2"
           />
           <select
@@ -188,6 +199,8 @@ export default function StudentView() {
                 </div>
 
                 <div>{student.fullName}</div>
+
+                <div>{student.email}</div>
 
                 <div>
                   Grade: {student.grade}

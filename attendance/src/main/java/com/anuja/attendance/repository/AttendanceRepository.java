@@ -13,6 +13,12 @@ public interface AttendanceRepository
             String studentNumber);
 
     List<Attendance> findByGradeAndSection(
-        String grade,
-        String section);
+            String grade,
+            String section);
+
+    boolean existsByStudentNumberAndDateAndPeriodAndSubject(
+            String studentNumber,
+            String date,
+            Integer period,
+            String subject);
 }
