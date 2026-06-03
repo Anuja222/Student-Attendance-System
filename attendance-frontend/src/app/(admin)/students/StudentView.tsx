@@ -11,6 +11,7 @@ import { getGrades } from "@/api/service/gradeService";
 import {
   getStudents,
   createStudent,
+  deleteStudent,
 } from "@/api/service/studentService";
 
 import { getSections } from "@/api/service/sectionService";
@@ -94,6 +95,14 @@ export default function StudentView() {
       console.error("Failed to create student", error);
     }
   };
+
+const handleDelete = async (
+  id: number
+) => {
+  await deleteStudent(id);
+
+  await loadStudents();
+};
 
   return (
     <div className="p-6">
@@ -190,25 +199,34 @@ export default function StudentView() {
             students.map((student) => (
               <div
                 key={student.id}
-                className="border rounded p-3"
+                className="border rounded p-3 flex justify-between items-center"
               >
                 <div>
-                  <strong>
-                    {student.studentNumber}
-                  </strong>
+                  <div>
+                    <strong>
+                      {student.studentNumber}
+                    </strong>
+                  </div>
+
+                  <div>{student.fullName}</div>
+
+                  <div>{student.email}</div>
+
+                  <div>
+                    Grade: {student.grade}
+                  </div>
+
+                  <div>
+                    Section: {student.section}
+                  </div>
                 </div>
 
-                <div>{student.fullName}</div>
-
-                <div>{student.email}</div>
-
-                <div>
-                  Grade: {student.grade}
-                </div>
-
-                <div>
-                  Section: {student.section}
-                </div>
+                <button
+                  onClick={() => handleDelete(student.id)}
+                  className="border rounded px-3 py-1"
+                >
+                  Delete
+                </button>
               </div>
             ))
           )}

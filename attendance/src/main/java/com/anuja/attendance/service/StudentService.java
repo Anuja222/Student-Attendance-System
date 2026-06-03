@@ -15,4 +15,6 @@ public interface StudentService {
     List<Student> getStudentsByGradeAndSection(String grade, String section);
 
     Student getStudentByEmail(String email);
+
+    void deleteStudent(Long id);
 }
